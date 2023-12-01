@@ -1,22 +1,36 @@
-Need a fan to move airflow in and out
-battery powered
-rechargable 
-small in size
-wifi powered
+# What is this?
+Air quality station to detect PM2.5 concentration, this setup is for demonstration purpose.
 
 
+# Design Requirement
+- Air circulation
+-- fan to circulate airflow
+- battery powered / USB powered 
+- Portable
+- WIFI transmission
 
-Logic level shifter requires 
-for 5v to 3v
 
-Encountered issue
+# Selected components:
+ZPH02 (Low cost)
+ESP8226 Dev board
+5V to 3V3 logic level shifter
+
+
+# Encountered issue
 - mismatched working voltage and output voltage
--- uses logic level shifter
-
-- flooded serial buffer because of tx issue
--- we can time the module
--- using software serial and check for overflow
+- flooded and hanged serial buffer 
 
 
-You can use Vin from your board, unfortunately for mine, it doesnt output 5v, probably caused by the diode beside to prevent two power source go through each others.
+# Technical requirement
+Logic level shifter
+- ZPH02 requires 5V while ESP provides 3V3 
+- 5V power supply (You can use Vin from the board, but mine doesnt work)
+- Serial overflow on my arduino uno
+- Transmission: PWM or Serial (Serial for this repo)
+- Data comes in every 9 bytes, first byte is 0xFF
+- baudrate is 9600
+- data is at [3] and [4], value in percentage should be [3].[4]%
 
+
+# Result
+Burn paper will generate about 15 - 18 percent, which can be refer to the graph.
